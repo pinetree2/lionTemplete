@@ -1,5 +1,6 @@
 package ex05;
 
+
 public class LikeStack {
     // ex04에서 만든 LikeList 사용
     private LikeList list;
