@@ -35,7 +35,7 @@ public class BoardController {
     @PostMapping("/board/writepro")
     public String boardWritePro(Board board){ //html 에서지정한 이름대로 매개변수가 Board 클래스에 담겨서 들어옴
         boardService.boardwrite(board);
-        return "";
+        return "redirect:/board/list";
 
     }
 
@@ -64,20 +64,23 @@ public class BoardController {
     //수정 버튼 동작
     //path variable 을 이용한 get 방식입니다.
     @GetMapping("/board/modify/{id}")
-    public String boardModify(@PathVariable("id") Integer id,Model model)
-    {
-        model.addAttribute("board",boardService.boardView(id));
+    public String boardModify(@PathVariable("id") Integer id,
+                              Model model) {
+
+        model.addAttribute("board", boardService.boardView(id));
+
         return "boardmodify";
     }
-
     //수정 반영
-    @PostMapping("board/update/{id}")
+    @PostMapping("/board/update/{id}")
     public String boardUpdate(@PathVariable("id") Integer id,Board board){
 
         Board boardTemp =boardService.boardView(id);
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
-
+        boardService.boardwrite(boardTemp);
         return "redirect:/board/list";
+
+
     }
 }
